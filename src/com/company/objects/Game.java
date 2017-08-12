@@ -23,7 +23,7 @@ public class Game {
 //            System.out.println("result2.get(count) = "+result2.get(count).getPrintableString());
             if (result1.get(count).compareSquare(result2.get(count-1))){
                 boolean[][] visited = new boolean[8][8];
-                visited[result2.get(count-1).xCoordinate][result2.get(count-1).yCoordinate]=true;
+                visited[result2.get(count-1).getxCoordinate()][result2.get(count-1).getyCoordinate()]=true;
                 List<Square> newResult1 = p1.findShortestPath(destinationSquare,visited);
                 endLoop=true;
                 compareResult(p1,p2,newResult1,result2,destinationSquare);
@@ -46,7 +46,7 @@ public class Game {
 
             if (result2.get(count).compareSquare(result1.get(count))){
                 boolean[][] visited2 = new boolean[8][8];
-                visited2[result1.get(count).xCoordinate][result1.get(count).yCoordinate]=true;
+                visited2[result1.get(count).getxCoordinate()][result1.get(count).getxCoordinate()]=true;
                 List<Square> newResult2 = p2.findShortestPath(destinationSquare,visited2);
                 endLoop=true;
                 compareResult(p1,p2,result1,newResult2,destinationSquare);
@@ -72,9 +72,9 @@ public class Game {
         if (!playerMoves.isEmpty()){
             for (int i=0;i<playerMoves.size();i++){
                 if (i%2==0){
-                    System.out.println("Player one move = ("+playerMoves.get(i).xCoordinate+","+playerMoves.get(i).yCoordinate+")");
+                    System.out.println("Player one move = "+playerMoves.get(i).getPrintableString());
                 }else {
-                    System.out.println("Player two move = ("+playerMoves.get(i).xCoordinate+","+playerMoves.get(i).yCoordinate+")");
+                    System.out.println("Player two move = "+playerMoves.get(i).getPrintableString());
                 }
             }
             System.out.println("Player "+winningPlayer+" Wins!");

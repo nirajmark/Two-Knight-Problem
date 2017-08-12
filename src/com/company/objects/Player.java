@@ -3,7 +3,7 @@ package com.company.objects;
 import java.util.*;
 
 public class Player {
-    boolean isValidSource = false ;
+
     Square sourceSquare;
     int sourceXCoordinate, sourceYCoordinate;
 
@@ -19,12 +19,10 @@ public class Player {
     public boolean setSourceSquare(String numbers) {
         if (isInputValid(numbers)){
             this.sourceSquare = new Square(sourceXCoordinate,sourceYCoordinate);
-            isValidSource = true;
-
+            return true;
         }else{
-            isValidSource = false;
+            return false;
         }
-        return isValidSource;
     }
 
     public boolean isInputValid(String numbers){
@@ -39,7 +37,6 @@ public class Player {
             }catch (Exception e){
                 return false;
             }
-
             try{
                 sourceYCoordinate = Integer.valueOf(numbersArray[1].trim());
                 if (sourceYCoordinate<0 || sourceYCoordinate>7){
@@ -49,7 +46,6 @@ public class Player {
             }catch (Exception e){
                 return false;
             }
-
         }else{
             return false;
         }
@@ -63,23 +59,16 @@ public class Player {
         sourceSquare.dist=0;
         squareQueue.add(sourceSquare);
 
-
-
-
-
         while(!squareQueue.isEmpty()){
             Square currSquare=squareQueue.poll();
-
             if (currSquare.compareSquare(destinationSquare)){
                 currSquare.lastSquares.add(new Square(7,7));
-
                 return currSquare.lastSquares;
             }
 
-            if (!visited[currSquare.xCoordinate][currSquare.yCoordinate]){
-                visited[currSquare.xCoordinate][currSquare.yCoordinate]=true;
-                int distance = currSquare.dist;
-
+            if (!visited[currSquare.getxCoordinate()][currSquare.getyCoordinate()]){
+                visited[currSquare.getxCoordinate()][currSquare.getyCoordinate()]=true;
+                int distance = currSquare.getDist();
                 List<Square> adjSquare = currSquare.getAdjucencyListForSquare();
                 for (Square square: adjSquare){
                     square.dist=distance+1;
@@ -87,17 +76,11 @@ public class Player {
                     if (!lastSquareList.contains(currSquare)){
                         lastSquareList.add(currSquare);
                     }
-
                     square.lastSquares.addAll(lastSquareList);
                     squareQueue.add(square);
                 }
-
             }
-
         }
-
         return null;
     }
-
-
 }

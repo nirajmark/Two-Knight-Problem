@@ -29,6 +29,10 @@ public class Square {
         return yCoordinate;
     }
 
+    public int getDist() {
+        return dist;
+    }
+
     public List<Square> getAdjucencyListForSquare(){
         List<Square> adjList = new ArrayList<Square>();
         for (int i =0 ;i<xDist.length; i++){
