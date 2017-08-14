@@ -16,6 +16,9 @@ public class Game {
         boolean endLoop=false;
         int count =1;
         int winningPlayer=0;
+
+        List<Square> conflictedSquareP1=new ArrayList<>();
+        List<Square> conflictedSquareP2=new ArrayList<>();
         List<Square> playerMoves=new ArrayList<>();
         while(!endLoop){
 //            System.out.println("result1.get(count) = "+result1.get(count).getPrintableString());
@@ -23,12 +26,19 @@ public class Game {
 //            System.out.println("result2.get(count) = "+result2.get(count).getPrintableString());
             if (result1.get(count).compareSquare(result2.get(count-1))){
                 boolean[][] visited = new boolean[8][8];
-                visited[result2.get(count-1).getxCoordinate()][result2.get(count-1).getyCoordinate()]=true;
-                List<Square> newResult1 = p1.findShortestPath(destinationSquare,visited);
-                endLoop=true;
-                compareResult(p1,p2,newResult1,result2,destinationSquare);
+                conflictedSquareP1.add(new Square(result2.get(count-1).getxCoordinate(),result2.get(count-1).getyCoordinate()));
+
+                if (!conflictedSquareP1.isEmpty()){
+                    for (Square square: conflictedSquareP1){
+                        visited[square.getxCoordinate()][square.getyCoordinate()]=true;
+                    }
+                }
+                result1 = p1.findShortestPath(destinationSquare,visited);
+//                endLoop=true;
+//                compareResult(p1,p2,newResult1,result2,destinationSquare);
                 playerMoves=new ArrayList<>();
-                break;
+                count = 1;
+                continue;
             }else{
                 if (result1.get(count).compareSquare(destinationSquare)){
                     playerMoves.add(destinationSquare);
@@ -46,12 +56,21 @@ public class Game {
 
             if (result2.get(count).compareSquare(result1.get(count))){
                 boolean[][] visited2 = new boolean[8][8];
-                visited2[result1.get(count).getxCoordinate()][result1.get(count).getxCoordinate()]=true;
-                List<Square> newResult2 = p2.findShortestPath(destinationSquare,visited2);
-                endLoop=true;
-                compareResult(p1,p2,result1,newResult2,destinationSquare);
+                conflictedSquareP2.add(new Square(result1.get(count).getxCoordinate(),result1.get(count).getyCoordinate()));
+
+                if (!conflictedSquareP2.isEmpty()){
+                    for (Square square: conflictedSquareP2){
+                        visited2[square.getxCoordinate()][square.getyCoordinate()]=true;
+                    }
+                }
+
+//                visited2[result1.get(count).getxCoordinate()][result1.get(count).getyCoordinate()]=true;
+                result2 = p2.findShortestPath(destinationSquare,visited2);
+//                endLoop=true;
+//                compareResult(p1,p2,result1,newResult2,destinationSquare);
+                count= 1;
                 playerMoves=new ArrayList<>();
-                break;
+                continue;
             }else{
                 if (result2.get(count).compareSquare(destinationSquare)){
                     playerMoves.add(destinationSquare);
