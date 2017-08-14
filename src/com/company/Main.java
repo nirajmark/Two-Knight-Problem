@@ -40,15 +40,20 @@ public class Main {
             numbers1 = sc.next();
             if (numbers1 != null && numbers1 != "" ){
                 p1Inputval = p1.setSourceSquare(numbers1);
-                if (p1.getSourceSquare().compareSquare(destinationSquare)){
-                    System.out.println("you are placing your Knight at destination .please try again ");
-                    p1.clearSourceSquare();
-                    p1Inputval = false;
-                }else{
-                    if (!p1Inputval){
-                        System.out.println("Input is invalid.please try again");
+                if (p1Inputval){
+                    if (p1.getSourceSquare().compareSquare(destinationSquare)){
+                        System.out.println("you are placing your Knight at destination .please try again ");
+                        p1.clearSourceSquare();
+                        p1Inputval = false;
+                    }else{
+                        if (!p1Inputval){
+                            System.out.println("Input is invalid.please try again");
+                        }
                     }
+                }else{
+                    System.out.println("Input is invalid.please try again");
                 }
+
 
             }else{
                 System.out.println("Input is Can not be null or empty.please try again");
@@ -62,16 +67,19 @@ public class Main {
             if (numbers2 != null && numbers2 != "" ) {
                 if (!numbers1.equalsIgnoreCase(numbers2)) {
                     p2Inputval = p2.setSourceSquare(numbers2);
-                    if (p2.getSourceSquare().compareSquare(destinationSquare)){
-                        System.out.println("you are placing your Knight at destination .please try again ");
-                        p2.clearSourceSquare();
-                        p2Inputval = false;
-                    }else{
-                        if (!p2Inputval) {
-                            System.out.println("Input is invalid.please try again");
+                    if (p2Inputval) {
+                        if (p2.getSourceSquare().compareSquare(destinationSquare)){
+                            System.out.println("you are placing your Knight at destination .please try again ");
+                            p2.clearSourceSquare();
+                            p2Inputval = false;
+                        }else{
+                            if (!p2Inputval) {
+                                System.out.println("Input is invalid.please try again");
+                            }
                         }
+                    }else{
+                        System.out.println("Input is invalid.please try again");
                     }
-
                 } else {
                     System.out.println("This square is already taken by player one .please try again");
                 }
